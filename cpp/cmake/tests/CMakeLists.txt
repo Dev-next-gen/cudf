@@ -34,3 +34,29 @@ add_test(NAME cudf_export_consumer COMMAND ${CMAKE_COMMAND} --build
 
 set_tests_properties(cudf_export_consumer_configure PROPERTIES FIXTURES_SETUP cudf_export_consumer)
 set_tests_properties(cudf_export_consumer PROPERTIES FIXTURES_REQUIRED cudf_export_consumer)
+
+set(cpm_project_package_info_source_dir "${CMAKE_CURRENT_LIST_DIR}/cpm_project_package_info")
+set(cpm_project_package_info_default_build_dir
+    "${CMAKE_CURRENT_BINARY_DIR}/cpm_project_package_info_default"
+)
+set(cpm_project_package_info_override_build_dir
+    "${CMAKE_CURRENT_BINARY_DIR}/cpm_project_package_info_override"
+)
+
+add_test(
+  NAME cpm_project_package_info_default
+  COMMAND
+    ${CMAKE_COMMAND} -S "${cpm_project_package_info_source_dir}" -B
+    "${cpm_project_package_info_default_build_dir}" -G "${CMAKE_GENERATOR}"
+    "-DCUDF_REPOSITORY_DIR=${CUDF_REPOSITORY_DIR}"
+)
+
+add_test(
+  NAME cpm_project_package_info_override
+  COMMAND
+    ${CMAKE_COMMAND} -S "${cpm_project_package_info_source_dir}" -B
+    "${cpm_project_package_info_override_build_dir}" -G "${CMAKE_GENERATOR}"
+    "-DCUDF_REPOSITORY_DIR=${CUDF_REPOSITORY_DIR}"
+    "-DRAPIDS_CMAKE_CPM_OVERRIDE_VERSION_FILE=${cpm_project_package_info_source_dir}/override.json"
+    "-DEXPECTED_DLPACK_VERSION=9.9.9"
+)

@@ -33,9 +33,9 @@ function(find_and_configure_cudf VERSION EXPORT_SET)
     list(APPEND cudf_components COMPONENTS testing)
   endif()
   include("${CMAKE_CURRENT_FUNCTION_LIST_DIR}/rapids_cpm_project_package_info.cmake")
-  cudf_cpm_project_package_info(cudf VERSION_VAR version FIND_VAR find_args CPM_VAR cpm_args)
+  cudf_cpm_project_package_info(cudf FIND_VAR find_args CPM_VAR cpm_args)
   rapids_cpm_find(
-    cudf ${version} ${find_args} ${cudf_components}
+    cudf ${VERSION} ${find_args} ${cudf_components}
     BUILD_EXPORT_SET ${EXPORT_SET}
     INSTALL_EXPORT_SET ${EXPORT_SET}
     CPM_ARGS ${cpm_args}
