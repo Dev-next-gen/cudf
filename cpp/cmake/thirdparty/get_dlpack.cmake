@@ -1,6 +1,6 @@
 # =============================================================================
 # cmake-format: off
-# SPDX-FileCopyrightText: Copyright (c) 2020-2026, NVIDIA CORPORATION.
+# SPDX-FileCopyrightText: Copyright (c) 2020-2026, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 # cmake-format: on
 # =============================================================================
@@ -10,12 +10,14 @@ function(find_and_configure_dlpack VERSION EXCLUDE_FROM_ALL)
 
   include(${rapids-cmake-dir}/find/generate_module.cmake)
   rapids_find_generate_module(DLPACK HEADER_NAMES dlpack.h)
+  include("${CMAKE_CURRENT_FUNCTION_LIST_DIR}/rapids_cpm_project_package_info.cmake")
+  cudf_cpm_project_package_info(
+    dlpack VERSION_VAR version FIND_VAR find_args CPM_VAR cpm_args
+  )
 
   rapids_cpm_find(
-    dlpack ${VERSION}
-    GIT_REPOSITORY https://github.com/dmlc/dlpack.git
-    GIT_TAG v${VERSION}
-    GIT_SHALLOW TRUE
+    dlpack ${version} ${find_args}
+    CPM_ARGS ${cpm_args}
     DOWNLOAD_ONLY TRUE
     EXCLUDE_FROM_ALL ${EXCLUDE_FROM_ALL}
     OPTIONS "BUILD_MOCK OFF"

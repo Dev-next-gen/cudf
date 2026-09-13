@@ -11,13 +11,12 @@ function(find_and_configure_rtcx VERSION)
   # install(EXPORT) validation. In static builds consumers need to link librtcx.a directly.
   set(RTCX_INSTALL ON)
 
+  include("${CMAKE_CURRENT_FUNCTION_LIST_DIR}/rapids_cpm_project_package_info.cmake")
+  cudf_cpm_project_package_info(rtcx VERSION_VAR version FIND_VAR find_args CPM_VAR cpm_args)
   rapids_cpm_find(
-    rtcx ${VERSION}
+    rtcx ${version} ${find_args}
     GLOBAL_TARGETS rtcx::rtcx
-    CPM_ARGS
-    GIT_REPOSITORY https://github.com/rapidsai/librtcx.git
-    GIT_TAG a9f63f8cdd4b0b41a2d88a9f705576a61b4222ec
-    GIT_SHALLOW FALSE
+    CPM_ARGS ${cpm_args}
     EXCLUDE_FROM_ALL ${CUDF_EXCLUDE_DEPS_FROM_ALL}
   )
 

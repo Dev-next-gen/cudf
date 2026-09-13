@@ -12,13 +12,12 @@ function(find_and_configure_xxhash)
   rapids_find_generate_module(xxhash HEADER_NAMES xxhash.h xxh3.h)
 
   set(CPM_DOWNLOAD_xxhash ON)
+  include("${CMAKE_CURRENT_FUNCTION_LIST_DIR}/rapids_cpm_project_package_info.cmake")
+  cudf_cpm_project_package_info(xxhash VERSION_VAR version FIND_VAR find_args CPM_VAR cpm_args)
   rapids_cpm_find(
-    xxhash 0.8.3
+    xxhash ${version} ${find_args}
     GLOBAL_TARGETS xxhash
-    CPM_ARGS
-    GIT_REPOSITORY https://github.com/Cyan4973/xxHash.git
-    GIT_TAG e626a72bc2321cd320e953a0ccf1584cad60f363
-    GIT_SHALLOW TRUE
+    CPM_ARGS ${cpm_args}
     DOWNLOAD_ONLY TRUE
     EXCLUDE_FROM_ALL ${CUDF_EXCLUDE_DEPS_FROM_ALL}
   )
