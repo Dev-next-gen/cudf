@@ -32,14 +32,13 @@ function(find_and_configure_cudf VERSION EXPORT_SET)
   if(BUILD_TESTS)
     list(APPEND cudf_components COMPONENTS testing)
   endif()
+  include("${CMAKE_CURRENT_FUNCTION_LIST_DIR}/rapids_cpm_project_package_info.cmake")
+  cudf_cpm_project_package_info(cudf VERSION_VAR version FIND_VAR find_args CPM_VAR cpm_args)
   rapids_cpm_find(
-    cudf ${VERSION} ${cudf_components}
+    cudf ${version} ${find_args} ${cudf_components}
     BUILD_EXPORT_SET ${EXPORT_SET}
     INSTALL_EXPORT_SET ${EXPORT_SET}
-    CPM_ARGS
-    GIT_REPOSITORY https://github.com/NVIDIA/cudf.git
-    GIT_TAG "${RAPIDS_BRANCH}"
-    GIT_SHALLOW TRUE SOURCE_SUBDIR cpp
+    CPM_ARGS ${cpm_args}
     OPTIONS "BUILD_TESTS OFF" "BUILD_BENCHMARKS OFF"
   )
   # If after loading cudf we now have the CMAKE_CUDA_COMPILER variable we know that we need to

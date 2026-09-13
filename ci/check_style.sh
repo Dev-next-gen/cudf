@@ -29,3 +29,6 @@ wget -O ${RAPIDS_CMAKE_FORMAT_FILE} "${FORMAT_FILE_URL}"
 
 # Run pre-commit checks
 pre-commit run --all-files --show-diff-on-failure
+
+# Keep third-party source pins in the central CPM catalog so parent projects can override them.
+cpp/scripts/check-cpm-source-metadata.sh

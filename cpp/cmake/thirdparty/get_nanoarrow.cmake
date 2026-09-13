@@ -7,13 +7,14 @@
 
 # This function finds nanoarrow and sets any additional necessary environment variables.
 function(find_and_configure_nanoarrow BUILD_SHARED EXCLUDE_FROM_ALL)
+  include("${CMAKE_CURRENT_FUNCTION_LIST_DIR}/rapids_cpm_project_package_info.cmake")
+  cudf_cpm_project_package_info(
+    nanoarrow VERSION_VAR version FIND_VAR find_args CPM_VAR cpm_args
+  )
   rapids_cpm_find(
-    nanoarrow 0.8.0
+    nanoarrow ${version} ${find_args}
     GLOBAL_TARGETS nanoarrow_static nanoarrow_shared
-    CPM_ARGS
-    GIT_REPOSITORY https://github.com/apache/arrow-nanoarrow.git
-    GIT_TAG apache-arrow-nanoarrow-0.8.0
-    GIT_SHALLOW TRUE
+    CPM_ARGS ${cpm_args}
     OPTIONS "BUILD_SHARED_LIBS ${BUILD_SHARED}" "NANOARROW_NAMESPACE cudf"
     EXCLUDE_FROM_ALL ${EXCLUDE_FROM_ALL}
   )

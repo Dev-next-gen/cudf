@@ -8,13 +8,12 @@
 # Find or build the CRoaring library needed for libcudf tests and benchmarks.
 function(find_and_configure_roaring VERSION EXCLUDE_FROM_ALL)
 
+  include("${CMAKE_CURRENT_FUNCTION_LIST_DIR}/rapids_cpm_project_package_info.cmake")
+  cudf_cpm_project_package_info(roaring VERSION_VAR version FIND_VAR find_args CPM_VAR cpm_args)
   rapids_cpm_find(
-    roaring ${VERSION}
+    roaring ${version} ${find_args}
     GLOBAL_TARGETS roaring::roaring
-    CPM_ARGS
-    GIT_REPOSITORY https://github.com/RoaringBitmap/CRoaring.git
-    GIT_TAG v${VERSION}
-    GIT_SHALLOW TRUE
+    CPM_ARGS ${cpm_args}
     EXCLUDE_FROM_ALL ${EXCLUDE_FROM_ALL}
     OPTIONS "ROARING_BUILD_STATIC ON"
             "BUILD_SHARED_LIBS OFF"

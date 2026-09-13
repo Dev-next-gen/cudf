@@ -1,6 +1,6 @@
 # =============================================================================
 # cmake-format: off
-# SPDX-FileCopyrightText: Copyright (c) 2025-2026, NVIDIA CORPORATION.
+# SPDX-FileCopyrightText: Copyright (c) 2025-2026, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 # cmake-format: on
 # =============================================================================
@@ -9,13 +9,12 @@
 function(find_and_configure_zstd)
 
   set(CPM_DOWNLOAD_zstd ON)
+  include("${CMAKE_CURRENT_FUNCTION_LIST_DIR}/rapids_cpm_project_package_info.cmake")
+  cudf_cpm_project_package_info(zstd VERSION_VAR version FIND_VAR find_args CPM_VAR cpm_args)
   rapids_cpm_find(
-    zstd 1.5.7
+    zstd ${version} ${find_args}
     GLOBAL_TARGETS zstd
-    CPM_ARGS
-    GIT_REPOSITORY https://github.com/facebook/zstd.git
-    GIT_TAG v1.5.7
-    GIT_SHALLOW FALSE SOURCE_SUBDIR build/cmake
+    CPM_ARGS ${cpm_args}
     EXCLUDE_FROM_ALL ${CUDF_EXCLUDE_DEPS_FROM_ALL}
     OPTIONS "ZSTD_BUILD_STATIC ON" "ZSTD_BUILD_SHARED OFF" "ZSTD_BUILD_TESTS OFF"
             "ZSTD_BUILD_PROGRAMS OFF" "BUILD_SHARED_LIBS OFF"

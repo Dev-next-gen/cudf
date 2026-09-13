@@ -1,0 +1,68 @@
+{
+  "packages": {
+    "Arrow": {
+      "version": "${CUDF_VERSION_Arrow}",
+      "git_url": "https://github.com/apache/arrow.git",
+      "git_tag": "apache-arrow-${version}",
+      "git_shallow": true,
+      "source_subdir": "cpp"
+    },
+    "cudf": {
+      "version": "${CUDF_VERSION_MAJOR}.${CUDF_VERSION_MINOR}.00",
+      "git_url": "https://github.com/NVIDIA/cudf.git",
+      "git_tag": "${RAPIDS_BRANCH}",
+      "git_shallow": true,
+      "source_subdir": "cpp"
+    },
+    "dlpack": {
+      "version": "0.8",
+      "git_url": "https://github.com/dmlc/dlpack.git",
+      "git_tag": "v${version}",
+      "git_shallow": true
+    },
+    "flatbuffers": {
+      "version": "24.3.25",
+      "git_url": "https://github.com/google/flatbuffers.git",
+      "git_tag": "v${version}",
+      "git_shallow": true
+    },
+    "kvikio": {
+      "version": "${rapids-cmake-version}",
+      "git_url": "https://github.com/rapidsai/kvikio.git",
+      "git_tag": "${RAPIDS_BRANCH}",
+      "git_shallow": true,
+      "source_subdir": "cpp"
+    },
+    "nanoarrow": {
+      "version": "0.8.0",
+      "git_url": "https://github.com/apache/arrow-nanoarrow.git",
+      "git_tag": "apache-arrow-nanoarrow-${version}",
+      "git_shallow": true
+    },
+    "roaring": {
+      "version": "4.4.2",
+      "git_url": "https://github.com/RoaringBitmap/CRoaring.git",
+      "git_tag": "v${version}",
+      "git_shallow": true
+    },
+    "zstd": {
+      "version": "1.5.7",
+      "git_url": "https://github.com/facebook/zstd.git",
+      "git_tag": "v${version}",
+      "git_shallow": false,
+      "source_subdir": "build/cmake"
+    },
+    "xxhash": {
+      "version": "0.8.3",
+      "git_url": "https://github.com/Cyan4973/xxHash.git",
+      "git_tag": "e626a72bc2321cd320e953a0ccf1584cad60f363",
+      "git_shallow": true
+    },
+    "rtcx": {
+      "version": "0.1",
+      "git_url": "https://github.com/rapidsai/librtcx.git",
+      "git_tag": "a9f63f8cdd4b0b41a2d88a9f705576a61b4222ec",
+      "git_shallow": false
+    }
+  }
+}

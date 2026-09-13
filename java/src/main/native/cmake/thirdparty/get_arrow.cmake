@@ -89,15 +89,15 @@ function(find_and_configure_arrow VERSION BUILD_STATIC EXCLUDE_FROM_ALL ENABLE_P
     list(APPEND ARROW_PARQUET_OPTIONS "ARROW_DEPENDENCY_SOURCE AUTO")
   endif()
 
+  include("${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../../../../../../cpp/cmake/thirdparty/rapids_cpm_project_package_info.cmake")
+  cudf_cpm_project_package_info(Arrow VERSION_VAR version FIND_VAR find_args CPM_VAR cpm_args)
+
   rapids_cpm_find(
-    Arrow ${VERSION}
+    Arrow ${version} ${find_args}
     GLOBAL_TARGETS
       arrow_shared parquet_shared arrow_acero_shared arrow_dataset_shared arrow_compute_shared
       arrow_static parquet_static arrow_acero_static arrow_dataset_static arrow_compute_static
-    CPM_ARGS
-    GIT_REPOSITORY https://github.com/apache/arrow.git
-    GIT_TAG apache-arrow-${VERSION}
-    GIT_SHALLOW TRUE SOURCE_SUBDIR cpp
+    CPM_ARGS ${cpm_args}
     EXCLUDE_FROM_ALL ${EXCLUDE_FROM_ALL}
     OPTIONS "CMAKE_VERBOSE_MAKEFILE ON"
             "ARROW_ACERO ON"
