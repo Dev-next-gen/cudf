@@ -57,6 +57,30 @@ public class AssertUtils {
   }
 
   /**
+   * Checks pairs of gather-map indices without regard to order, preserving duplicate counts.
+   * The caller retains ownership of the expected table and both gather maps.
+   * @param expected expected left and right indices as a two-column table
+   * @param maps actual left and right gather maps
+   */
+  public static void assertGatherMapsEqualUnordered(Table expected, GatherMap[] maps) {
+    assertEquals(2, expected.getNumberOfColumns());
+    assertEquals(2, maps.length);
+    int numRows = (int) expected.getRowCount();
+    assertEquals(numRows, maps[0].getRowCount());
+    assertEquals(numRows, maps[1].getRowCount());
+    // Sort pairs together to preserve which build row matched each probe row.
+    try (ColumnView leftView = maps[0].toColumnView(0, numRows);
+         ColumnView rightView = maps[1].toColumnView(0, numRows);
+         ColumnVector leftMap = leftView.copyToColumnVector();
+         ColumnVector rightMap = rightView.copyToColumnVector();
+         Table result = new Table(leftMap, rightMap);
+         Table orderedExpected = expected.orderBy(OrderByArg.asc(0, true), OrderByArg.asc(1, true));
+         Table orderedResult = result.orderBy(OrderByArg.asc(0, true), OrderByArg.asc(1, true))) {
+      assertTablesAreEqual(orderedExpected, orderedResult);
+    }
+  }
+
+  /**
    * Checks and asserts that passed in columns match
    * @param expect The expected result column
    * @param cv The input column

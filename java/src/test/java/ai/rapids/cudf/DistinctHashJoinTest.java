@@ -8,6 +8,7 @@ package ai.rapids.cudf;
 import org.junit.jupiter.api.Test;
 
 import static ai.rapids.cudf.AssertUtils.assertGatherMapEquals;
+import static ai.rapids.cudf.AssertUtils.assertGatherMapsEqualUnordered;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -50,6 +51,26 @@ public class DistinctHashJoinTest {
          GatherMap map2 = probe2Table.leftDistinctJoinGatherMap(hashJoin)) {
       assertGatherMapEquals(expected1, map1);
       assertGatherMapEquals(expected2, map2);
+    }
+  }
+
+  @Test
+  void testInnerDistinctJoinGatherMapsCanBeReusedAcrossProbeTables() {
+    try (ColumnVector buildKeys = ColumnVector.fromInts(0, 1, 2, 3);
+         Table buildTable = new Table(buildKeys);
+         DistinctHashJoin hashJoin = new DistinctHashJoin(buildTable, true);
+         ColumnVector probe1Keys = ColumnVector.fromInts(1, 2, 4);
+         Table probe1Table = new Table(probe1Keys);
+         ColumnVector probe2Keys = ColumnVector.fromInts(3, 0, 5);
+         Table probe2Table = new Table(probe2Keys);
+         Table expected1 = new Table.TestBuilder().column(0, 1).column(1, 2).build();
+         Table expected2 = new Table.TestBuilder().column(0, 1).column(3, 0).build();
+         CloseableArray<GatherMap> maps1 =
+             CloseableArray.wrap(probe1Table.innerDistinctJoinGatherMaps(hashJoin));
+         CloseableArray<GatherMap> maps2 =
+             CloseableArray.wrap(probe2Table.innerDistinctJoinGatherMaps(hashJoin))) {
+      assertGatherMapsEqualUnordered(expected1, maps1.getArray());
+      assertGatherMapsEqualUnordered(expected2, maps2.getArray());
     }
   }
 
