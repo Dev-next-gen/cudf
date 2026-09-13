@@ -9,9 +9,7 @@
 function(find_and_configure_flatbuffers VERSION EXCLUDE_FROM_ALL)
 
   include("${CMAKE_CURRENT_FUNCTION_LIST_DIR}/rapids_cpm_project_package_info.cmake")
-  cudf_cpm_project_package_info(
-    flatbuffers VERSION_VAR version FIND_VAR find_args CPM_VAR cpm_args
-  )
+  cudf_cpm_project_package_info(flatbuffers VERSION_VAR version FIND_VAR find_args CPM_VAR cpm_args)
   rapids_cpm_find(
     flatbuffers ${version} ${find_args}
     GLOBAL_TARGETS flatbuffers

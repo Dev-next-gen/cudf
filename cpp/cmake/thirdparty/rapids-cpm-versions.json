@@ -1,7 +1,7 @@
 {
   "packages": {
     "Arrow": {
-      "version": "${CUDF_VERSION_Arrow}",
+      "version": "21.0.0",
       "git_url": "https://github.com/apache/arrow.git",
       "git_tag": "ee4d09ebef61c663c1efbfa4c18e518a03b798be",
       "git_tag_alias": "apache-arrow-21.0.0",
@@ -9,7 +9,7 @@
       "source_subdir": "cpp"
     },
     "cudf": {
-      "version": "${CUDF_VERSION_MAJOR}.${CUDF_VERSION_MINOR}.00",
+      "version": "${RAPIDS_VERSION_MAJOR}.${RAPIDS_VERSION_MINOR}.00",
       "git_url": "https://github.com/NVIDIA/cudf.git",
       "git_tag": "742e4fd85f3ae440ca78a3a722ed1603d44a841f",
       "git_tag_alias": "${RAPIDS_BRANCH}",
@@ -31,7 +31,7 @@
       "git_shallow": true
     },
     "kvikio": {
-      "version": "${CUDF_VERSION_MAJOR}.${CUDF_VERSION_MINOR}",
+      "version": "${RAPIDS_VERSION_MAJOR}.${RAPIDS_VERSION_MINOR}",
       "git_url": "https://github.com/rapidsai/kvikio.git",
       "git_tag": "e4cb3cab779fcdc3341e0ef446d28a31f2a96d8a",
       "git_tag_alias": "${RAPIDS_BRANCH}",

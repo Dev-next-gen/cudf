@@ -89,7 +89,9 @@ function(find_and_configure_arrow VERSION BUILD_STATIC EXCLUDE_FROM_ALL ENABLE_P
     list(APPEND ARROW_PARQUET_OPTIONS "ARROW_DEPENDENCY_SOURCE AUTO")
   endif()
 
-  include("${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../../../../../../cpp/cmake/thirdparty/rapids_cpm_project_package_info.cmake")
+  include(
+    "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../../../../../../cpp/cmake/thirdparty/rapids_cpm_project_package_info.cmake"
+  )
   cudf_cpm_project_package_info(Arrow VERSION_VAR version FIND_VAR find_args CPM_VAR cpm_args)
 
   rapids_cpm_find(

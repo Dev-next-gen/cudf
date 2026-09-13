@@ -8,9 +8,7 @@
 # This function finds nanoarrow and sets any additional necessary environment variables.
 function(find_and_configure_nanoarrow BUILD_SHARED EXCLUDE_FROM_ALL)
   include("${CMAKE_CURRENT_FUNCTION_LIST_DIR}/rapids_cpm_project_package_info.cmake")
-  cudf_cpm_project_package_info(
-    nanoarrow VERSION_VAR version FIND_VAR find_args CPM_VAR cpm_args
-  )
+  cudf_cpm_project_package_info(nanoarrow VERSION_VAR version FIND_VAR find_args CPM_VAR cpm_args)
   rapids_cpm_find(
     nanoarrow ${version} ${find_args}
     GLOBAL_TARGETS nanoarrow_static nanoarrow_shared
