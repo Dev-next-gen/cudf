@@ -26,6 +26,8 @@ set(EXPECTED_FLATBUFFERS_VERSION
 )
 
 include("${CUDF_REPOSITORY_DIR}/cmake/rapids_config.cmake")
+set(CUDF_VERSION_MAJOR 98)
+set(CUDF_VERSION_MINOR 76)
 include("${rapids-cmake-dir}/cpm/init.cmake")
 rapids_cpm_init()
 # cmake-lint: disable=C0111
@@ -43,3 +45,4 @@ endfunction()
 # after the helper's global include guard suppresses subsequent includes.
 assert_project_package_version(dlpack "${EXPECTED_DLPACK_VERSION}")
 assert_project_package_version(flatbuffers "${EXPECTED_FLATBUFFERS_VERSION}")
+assert_project_package_version(kvikio "${CUDF_VERSION_MAJOR}.${CUDF_VERSION_MINOR}")
