@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HashJoinTest {
@@ -31,6 +32,21 @@ public class HashJoinTest {
         assertTrue(hashJoin.getCompareNullsEqual());
         assertTrue(hashJoin.getCompareNulls());
       }
+    }
+  }
+
+  @Test
+  void testClosedHashJoin() {
+    try (Table build = new Table.TestBuilder().column(7, 9).build();
+         Table probe = new Table.TestBuilder().column(7, 8).build()) {
+      HashJoin hashJoin = new HashJoin(build, false);
+      hashJoin.close();
+      assertEquals(1, hashJoin.getNumberOfColumns());
+      assertFalse(hashJoin.getCompareNullsEqual());
+      assertThrows(IllegalStateException.class, () -> probe.leftJoinGatherMaps(hashJoin));
+      assertThrows(IllegalStateException.class, () -> probe.innerJoinGatherMaps(hashJoin));
+      assertThrows(IllegalStateException.class, () -> probe.fullJoinGatherMaps(hashJoin));
+      assertThrows(IllegalStateException.class, hashJoin::close);
     }
   }
 }
